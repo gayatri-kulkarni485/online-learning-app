@@ -1,1 +1,1 @@
-Here,a folder named "backend" contains the backend of the project while the folder named "public" conains the fontend of the project.
+Here,a folder named "backend" contains the backend of the project while the folder named "public" contains the frontend of the project.
