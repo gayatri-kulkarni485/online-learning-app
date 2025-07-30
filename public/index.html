@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Learning Platform</title>
+  <style>
+    /* Base Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f2f2f2;
+}
+
+/* Header */
+header {
+  background-color: #343a40;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Image Slider */
+.slider {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+}
+
+.slides {
+  display: flex;
+  width: 300%;
+  height: 250px;
+  animation: slide 9s infinite;
+}
+
+.slides img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+/* Slider Animation */
+@keyframes slide {
+  0%   { transform: translateX(0); }
+  33%  { transform: translateX(-100%); }
+  66%  { transform: translateX(-200%); }
+  100% { transform: translateX(0); }
+}
+
+/* Scrollable Course Cards */
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+  gap: 20px;
+}
+
+.column {
+  min-width: 250px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.column h3 {
+  margin-top: 0;
+}
+
+/* Buy Button */
+.buy-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.buy-btn:hover {
+  background-color: #0056b3;
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to CodeAcademy</h1>
+    <p>Your One-Stop Platform to Learn Programming</p>
+  </header>
+
+  <!-- Slider -->
+<div class="slider">
+  <div class="slides">
+    <img src="images/img1.jpg" alt="slide1">
+    <img src="images/img2.jpg" alt="slide2">
+    <img src="images/img3.jpg" alt="slide3">
+  </div>
+</div>
+
+  <!-- Scrollable Columns -->
+  <div class="scroll-container">
+
+    <div class="column">
+      <img src="images/python.jpg" alt="Python" style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
+
+        <h3>Python</h3>
+        <p><a href="https://www.youtube.com/watch?v=ERCMXc8x7mc" target="_blank">Watch Course</a></p>
+        <a class="buy-btn" href="#" onclick="buyCourse('Python', 'https://www.youtube.com/watch?v=ERCMXc8x7mc')">Buy Course</a>
+    </div>
+
+    <div class="column">
+      <img src="images/java.jpg" alt="Java" style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
+
+        <h3>Java</h3>
+        <p><a href="https://www.youtube.com/watch?v=UmnCZ7-9yDY" target="_blank">Watch Course</a></p>
+        <a class="buy-btn" href="#" onclick="buyCourse('Java', 'https://www.youtube.com/watch?v=UmnCZ7-9yDY')">Buy Course</a>
+    </div>
+
+    <div class="column">
+        <h3>HTML + CSS</h3>
+        <img src="images/html-css.jpg" alt="HTML-CSS" style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
+        <p><a href="https://www.youtube.com/watch?v=Q33KBiDriJY" target="_blank">Watch Course</a></p>
+        <a class="buy-btn" href="#" onclick="buyCourse('HTML + CSS', 'https://www.youtube.com/watch?v=Q33KBiDriJY')">Buy Course</a>
+    </div>
+
+    <div class="column">
+        <h3>C Language</h3>
+        <img src="images/c.jpg" alt="C" style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
+        <p><a href="https://www.youtube.com/watch?v=irqbmMNs2Bo" target="_blank">Watch Course</a></p>
+        <a class="buy-btn" href="#" onclick="buyCourse('C Language', 'https://www.youtube.com/watch?v=irqbmMNs2Bo')">Buy Course</a>
+    </div>
+
+    <div class="column">
+        <h3>JavaScript</h3>
+        <img src="images/javascript.jpg" alt="JavaScript" style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
+        <p><a href="https://www.youtube.com/watch?v=SBmSRK3feww" target="_blank">Watch Course</a></p>
+        <a class="buy-btn" href="#" onclick="buyCourse('JavaScript', 'https://www.youtube.com/watch?v=SBmSRK3feww')">Buy Course</a>
+    </div>
+    <div class="column">
+    <h3>PHP</h3>
+    <img src="images/php.jpg" alt="PHP" style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
+    <p><a href="https://www.youtube.com/watch?v=OK_JCtrrv-c" target="_blank">Watch Course</a></p>
+    <a class="buy-btn" href="#" onclick="buyCourse('PHP', 'https://www.youtube.com/watch?v=OK_JCtrrv-c')">Buy Course</a>
+</div>
+
+  </div>
+<script>
+  function buyCourse(courseName, youtubeLink) {
+    const studentName = prompt("Enter your name:");
+    if (!studentName) return;
+
+    fetch('http://localhost:3000/purchase', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        studentName,
+        courseName,
+        youtubeLink,
+        paymentStatus: 'Paid'
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        alert('✅ Purchase successful!');
+      } else {
+        alert('❌ Error purchasing course.');
+      }
+    })
+    .catch(err => {
+      alert('❌ Network error.');
+      console.error(err);
+    });
+  }
+</script>
+</body>
+</html>

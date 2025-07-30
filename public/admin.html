@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - Course Purchases</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    h2 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>📋 All Course Purchases</h2>
+  <table id="purchaseTable">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Course Name</th>
+        <th>Payment Status</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('http://localhost:3000/admin/purchases')
+      .then(res => res.json())
+      .then(data => {
+        const tableBody = document.querySelector("#purchaseTable tbody");
+        data.forEach(purchase => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${purchase.studentName}</td>
+            <td>${purchase.courseName}</td>
+            <td>${purchase.paymentStatus}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error("Error loading purchases:", err);
+        alert("❌ Could not load purchases.");
+      });
+  </script>
+</body>
+</html>
